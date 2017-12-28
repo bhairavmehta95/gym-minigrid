@@ -66,6 +66,48 @@ register(
     entry_point='gym_minigrid.envs:DoorKeyEnv16x16'
 )
 
+
+class MultiRoomEnvDynamicGoal(MiniGridEnv):
+    """
+    Environment with a door and key, sparse reward
+    """
+
+    def __init__(self, size=15):
+        super(MultiRoomEnvDynamicGoal, self).__init__(gridSize=size, maxSteps=4 * size)
+
+    def _genGrid(self, width, height):
+        grid = super(MultiRoomEnvDynamicGoal, self)._genGrid(width, height)
+        assert width == height
+        gridSz = width
+
+        # Create a vertical splitting wall
+        splitIdx = int(gridSz / 2)
+        for i in range(0, gridSz):
+            if i == int(splitIdx / 2): continue
+            # elif int(i / 2) == splitIdx: continue
+            elif i == int((3 * splitIdx) / 2): continue
+            # elif  
+
+            grid.set(splitIdx, i, Wall())
+            grid.set(i, splitIdx, Wall())
+
+        # # Place a door in the wall
+        # doorIdx = self._randInt(1, gridSz-2)
+        # grid.set(splitIdx, doorIdx, Door('yellow'))
+
+        # Place a key on the left side
+        #keyIdx = self._randInt(1 + gridSz // 2, gridSz-2)
+        # keyIdx = gridSz-2
+        # grid.set(1, keyIdx, Key('yellow'))
+
+        return grid
+
+register(
+    id='MiniGrid-DynamicGoal-v0',
+    entry_point='gym_minigrid.envs:MultiRoomEnvDynamicGoal'
+)
+
+
 class Room:
     def __init__(self,
         top,
