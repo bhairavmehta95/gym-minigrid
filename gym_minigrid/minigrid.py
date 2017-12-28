@@ -515,6 +515,7 @@ class MiniGridEnv(gym.Env):
 
         # Range of possible rewards
         self.reward_range = (-1, 1000)
+        self.num_episodes = 0
 
         # Renderer object used to render the whole grid (full-scale)
         self.gridRender = None
@@ -548,9 +549,11 @@ class MiniGridEnv(gym.Env):
             grid.set(0, j, Wall())
             grid.set(height - 1, j, Wall())
 
-        # Place a goal in the bottom-left corner
-        grid.set(width - 2, height - 2, Goal())
-
+        # Place a goal in the bottom-right corner
+        if self.num_episodes < 500:
+            grid.set(1, height - 2, Goal())
+        else:
+            grid.set(width - 2, height - 2, Goal())
         return grid
 
     def _reset(self):
@@ -558,6 +561,7 @@ class MiniGridEnv(gym.Env):
         # To prevent this behavior, call env.seed with the same
         # seed before env.reset
         self.grid = self._genGrid(self.gridSize, self.gridSize)
+        self.num_episodes += 1
 
         # Place the agent in the starting position and direction
         self.agentPos = self.startPos
