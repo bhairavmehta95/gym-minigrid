@@ -704,14 +704,14 @@ class MiniGridEnv(gym.Env):
         Generate the agent's view (partially observable, low-resolution encoding)
         """
 
-        topX, topY, botX, botY = self.getViewExts()
+        # topX, topY, botX, botY = self.getViewExts()
 
-        grid = self.grid.slice(topX, topY, AGENT_VIEW_SIZE, AGENT_VIEW_SIZE)
+        # grid = self.grid.slice(topX, topY, AGENT_VIEW_SIZE, AGENT_VIEW_SIZE)
 
-        for i in range(self.agentDir + 1):
-            grid = grid.rotateLeft()
+        # for i in range(self.agentDir + 1):
+        #     grid = grid.rotateLeft()
 
-        obs = grid.encode()
+        obs = self.grid.encode()
 
         return obs
 

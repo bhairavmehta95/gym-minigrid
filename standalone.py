@@ -47,6 +47,8 @@ def main():
             return
 
         obs, reward, done, info = env.step(action)
+        print(obs)
+        print(obs.shape)
 
         print('step=%s, reward=%s' % (env.stepCount, reward))
 
@@ -59,6 +61,7 @@ def main():
     while True:
         env.render('human')
         time.sleep(0.01)
+
 
         # If the window was closed
         if renderer.window == None:
