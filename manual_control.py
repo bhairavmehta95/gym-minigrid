@@ -67,7 +67,6 @@ def main():
 
         obs, reward, done, info = env.step(action)
         print(obs)
-        print(obs.shape)
 
         print('step=%s, reward=%.2f' % (env.step_count, reward))
 
